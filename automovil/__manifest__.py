@@ -65,6 +65,7 @@ Hola <b>mundo<b> este es otro Texto
         ],
     },
     'data': [
+        'data/decimal_precision.xml',
         'security/ir.model.access.csv',
         'views/automovil_views.xml',
     ],
