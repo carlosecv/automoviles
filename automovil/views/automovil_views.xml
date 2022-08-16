@@ -35,6 +35,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="model_year"/>
                 <field name="is_on"/>
                 <field name="velocity"/>
                 <field name="doors_number"/>
@@ -51,11 +52,33 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="doors_number"/>
-                        <field name="is_on"/>
-                        <field name="velocity"/>
-                        <field name="description"/>
                     </group>
+                    <group col="4" name="model_group">
+                        <field name="model_year"/>
+                        <field name="doors_number"  />
+
+                    </group>
+                    <separator string="Services" colspan="4" />
+                    <group name="services_group" >
+                        <field name="last_service_date"/>
+                        <field name="last_verification_date"/>
+                        <field name="next_verification_date"/>
+                        <field name="cylinders" />
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description_page">
+                            <group>
+                                <field name="description" nolabel="1" />
+                            </group>
+                        </page>
+                        <page string="Status Engine" name="status_page">
+                            <group>
+                                <field name="is_on"/>
+                                <field name="velocity"/>
+                            </group>
+                        </page>
+                    </notebook>
+
                 </sheet>
             </form>
         </field>
