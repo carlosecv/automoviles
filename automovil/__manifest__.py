@@ -58,7 +58,7 @@ Hola <b>mundo<b> este es otro Texto
     'category': 'Instruction Course',
 
     'depends': [
-        'base'
+        'base','web'
     ],
     'external_dependencies': {
         'python': [

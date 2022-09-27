@@ -36,12 +36,15 @@
             <tree>
                 <field name="name"/>
                 <field name="model_year"/>
+                <field name="last_service_date" />
                 <field name="is_on"/>
                 <field name="velocity"/>
                 <field name="doors_number"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
+
 
     <!-- model.name form view -->
     <record id="automovil_view_form" model="ir.ui.view">
@@ -49,21 +52,34 @@
         <field name="model">automovil</field>
         <field name="arch" type="xml">
             <form string="Automovil">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="stop,run"
+                    options="{'clickable': '1'}"
+                    />
+                </header>
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                    </group>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1><field name="name" placeholder="Describe the item..." /></h1>
+                    </div>
+
                     <group col="4" name="model_group">
                         <field name="model_year"/>
                         <field name="doors_number"  />
 
                     </group>
-                    <separator string="Services" colspan="4" />
-                    <group name="services_group" >
+
+
+                    <group col="2" name="services_group" >
+                        <separator string="Services" colspan="2" />
+                        <group>
                         <field name="last_service_date"/>
                         <field name="last_verification_date"/>
+                        </group>
+                        <group>
                         <field name="next_verification_date"/>
                         <field name="cylinders" />
+                        </group>
                     </group>
                     <notebook>
                         <page string="Description" name="description_page">
@@ -81,6 +97,44 @@
 
                 </sheet>
             </form>
+        </field>
+    </record>
+
+
+    <!-- model.name search view -->
+    <record id="automovil_view_search" model="ir.ui.view">
+        <field name="name">automovil.view.search</field>
+        <field name="model">automovil</field>
+        <field name="arch" type="xml">
+            <search string="Search Description">
+                <!-- Filtros -->
+                <field name="name"/>
+                <field name="model_year"/>
+                <field name="cylinders"/>
+                <separator string="Filters" />
+                <filter string="Engine On"
+                        name="filter_engine_on"
+                    domain="[('is_on','=',True)]" />
+                <filter string="Engine On Or Velocity Positive"
+                    name="filter_engine_on_or_velocity_positive"
+                domain="['|',('is_on','=',True),('velocity','>',0.0)]" />
+
+                <filter string="Service More than 6 Months"
+                name="filter_last_6_months"
+                domain="[('last_service_date','&lt;=', (context_today() - relativedelta(months=6)).strftime('%%Y-%%m-%%d'))]"/>
+
+                <group>
+                    <filter string="Service"
+                        name="group_by_service_last_6_months"
+                        context="{'group_by': 'last_service_date:month'}"
+                        />
+                    <filter string="State"
+                        name="group_by_state"
+                        context="{'group_by': 'state'}"
+                        />
+
+                </group>
+            </search>
         </field>
     </record>
 

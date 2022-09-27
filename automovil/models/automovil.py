@@ -50,6 +50,13 @@ class Automovil(models.Model):
                                                                 required=True)
 
 
+    state = fields.Selection(
+        string='State',
+        selection=[('stop', 'Is Stop'), ('run', 'Running')],
+        default='stop',
+        required=True
+    )
+
 
     @api.onchange('last_verification_date')
     def _onchange_last_verification_date(self):
@@ -61,3 +68,7 @@ class Automovil(models.Model):
             self.is_on = False
         else:
             self.is_on = True
+
+    def action_test(self):
+        return True
+
